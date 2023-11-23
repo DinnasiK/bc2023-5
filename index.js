@@ -99,57 +99,42 @@ app.put('/notes/:note_name', (req, res) => {
     if (noteIndex !== -1) {
       notes[noteIndex].note_text = newNoteText;
 
-      // Записати оновлений масив заміток назад у файл
       fs.writeFile(notesPath, JSON.stringify(notes), (err) => {
         if (err) {
-          // Якщо сталася помилка при записі, відправити статус-код помилки 500
           return res.status(500).send('Помилка при оновленні замітки.');
         }
-        // Якщо оновлення пройшло успішно, відправити статус-код успіху 200
         res.status(200).send('Замітка оновлена успішно.');
       });
     } else {
-      // Якщо замітка з такою назвою не знайдена, відправити статус-код помилки 404
       res.status(404).send('Замітку з такою назвою не знайдено.');
     }
   });
 });
 
 app.delete('/notes/:note_name', (req, res) => {
-  // Отримуємо назву замітки, яку потрібно видалити, з параметрів шляху
   const noteName = req.params.note_name;
 
-  // Вказуємо шлях до файлу з замітками
   const notesPath = path.join(__dirname, 'notes.json');
 
-  // Читаємо файл з замітками
   fs.readFile(notesPath, 'utf8', (err, data) => {
     if (err) {
-      // Якщо сталася помилка при читанні файлу, відправляємо статус-код помилки сервера
       return res.status(500).send('Помилка при читанні файлу з замітками.');
     }
 
-    // Розбираємо вміст файлу як JSON
     const notes = JSON.parse(data);
 
-    // Визначаємо, чи існує замітка з такою назвою
     const noteIndex = notes.findIndex(n => n.note_name === noteName);
 
     if (noteIndex !== -1) {
-      // Якщо замітка існує, видаляємо її з масиву
       notes.splice(noteIndex, 1);
 
-      // Записуємо оновлений масив заміток назад у файл
       fs.writeFile(notesPath, JSON.stringify(notes), 'utf8', (err) => {
         if (err) {
-          // Якщо сталася помилка при записі, відправляємо статус-код помилки сервера
           return res.status(500).send('Помилка при видаленні замітки.');
         }
-        // Відправляємо відповідь, що замітка була успішно видалена
         res.status(200).send(`Замітка з назвою "${noteName}" була видалена.`);
       });
     } else {
-      // Якщо замітки з такою назвою не існує, відправляємо статус-код помилки 404
       res.status(404).send('Замітку з такою назвою не знайдено.');
     }
   });
