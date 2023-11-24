@@ -4,7 +4,7 @@
 		"name": "collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31055393",
-		"_collection_link": "https://galactic-station-873629.postman.co/workspace/7a6f0805-85f0-4c66-813f-99d771a98114/collection/31055393-a2e03ea3-3de4-41de-97da-5e0e88aa40ad?action=share&source=collection_link&creator=31055393"
+		"_collection_link": "https://galactic-station-873629.postman.co/workspace/Team-Workspace~7a6f0805-85f0-4c66-813f-99d771a98114/collection/31055393-a2e03ea3-3de4-41de-97da-5e0e88aa40ad?action=share&source=collection_link&creator=31055393"
 	},
 	"item": [
 		{
@@ -51,8 +51,8 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": ""
+					"mode": "formdata",
+					"formdata": []
 				},
 				"url": {
 					"raw": "http://localhost:8000/upload",
