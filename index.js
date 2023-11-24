@@ -40,6 +40,11 @@ app.get('/UploadForm.html', (req, res) => {
 app.post("/upload", upload.single("note"), (req, res) => {
   const noteName = req.body.note_name;
   const noteText = req.body.note;
+
+  if (!noteName) {
+    return res.status(400).send('<h1 style="font-size:60px;">Назва нотатки не може бути пустою.</h1>');
+  }
+
   fs.readFile("notes.json", "utf8", (err, notesData) => {
     if (err) {
       const newNote = { note_name: noteName, note_text: noteText };
@@ -89,7 +94,7 @@ app.put('/notes/:note_name', (req, res) => {
 
   fs.readFile(notesPath, 'utf8', (err, data) => {
     if (err) {
-      return res.status(500).send('Помилка при читанні файлу з замітками.');
+      return res.status(500).send('<h1 style="font-size:60px;">Помилка при читанні файлу з замітками.</h1>');
     }
 
     const notes = JSON.parse(data);
@@ -101,12 +106,12 @@ app.put('/notes/:note_name', (req, res) => {
 
       fs.writeFile(notesPath, JSON.stringify(notes), (err) => {
         if (err) {
-          return res.status(500).send('Помилка при оновленні замітки.');
+          return res.status(500).send('<h1 style="font-size:60px;">Помилка при оновленні замітки.</h1>');
         }
-        res.status(200).send('Замітка оновлена успішно.');
+        res.status(200).send('<h1 style="font-size:60px;">Замітка оновлена успішно.</h1>');
       });
     } else {
-      res.status(404).send('Замітку з такою назвою не знайдено.');
+      res.status(404).send('<h1 style="font-size:60px;">Замітку з такою назвою не знайдено.</h1>');
     }
   });
 });
@@ -118,7 +123,7 @@ app.delete('/notes/:note_name', (req, res) => {
 
   fs.readFile(notesPath, 'utf8', (err, data) => {
     if (err) {
-      return res.status(500).send('Помилка при читанні файлу з замітками.');
+      return res.status(500).send('<h1 style="font-size:60px;">Помилка при читанні файлу з замітками.</h1>');
     }
 
     const notes = JSON.parse(data);
@@ -130,12 +135,12 @@ app.delete('/notes/:note_name', (req, res) => {
 
       fs.writeFile(notesPath, JSON.stringify(notes), 'utf8', (err) => {
         if (err) {
-          return res.status(500).send('Помилка при видаленні замітки.');
+          return res.status(500).send('<h1 style="font-size:60px;">Помилка при видаленні замітки.</h1>');
         }
-        res.status(200).send(`Замітка з назвою "${noteName}" була видалена.`);
+        res.status(200).send(`<h1 style="font-size:60px;">Замітка з назвою "${noteName}" була видалена.</h1>`);
       });
     } else {
-      res.status(404).send('Замітку з такою назвою не знайдено.');
+      res.status(404).send('<h1 style="font-size:60px;">Замітку з такою назвою не знайдено.</h1>');
     }
   });
 });
